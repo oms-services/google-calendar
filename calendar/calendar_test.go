@@ -1,4 +1,4 @@
-package calender
+package calendar
 
 import (
 	"bytes"
@@ -12,19 +12,19 @@ import (
 )
 
 var (
-	key            = os.Getenv("GOOGLE_CALENDER_KEY")
-	calenderID     = os.Getenv("GOOGLE_CALENDER_ID")
-	eventID        = os.Getenv("GOOGLE_CALENDER_EVENT_ID")
-	eventStartDate = os.Getenv("GOOGLE_CALENDER_EVENT_START_DATE")
-	eventEndDate   = os.Getenv("GOOGLE_CALENDER_EVENT_END_DATE")
+	key            = os.Getenv("GOOGLE_CALENDAR_KEY")
+	calendarID     = os.Getenv("GOOGLE_CALENDAR_ID")
+	eventID        = os.Getenv("GOOGLE_CALENDAR_EVENT_ID")
+	eventStartDate = os.Getenv("GOOGLE_CALENDAR_EVENT_START_DATE")
+	eventEndDate   = os.Getenv("GOOGLE_CALENDAR_EVENT_END_DATE")
 )
 
 var _ = Describe("Get Event List with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := []byte(`{"status":false}`)
+	calendar := []byte(`{"status":false}`)
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -49,9 +49,9 @@ var _ = Describe("Get Event List with invalid param", func() {
 var _ = Describe("Get Event List with invalid key", func() {
 
 	os.Setenv("KEY", "mockKey")
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -76,9 +76,9 @@ var _ = Describe("Get Event List with invalid key", func() {
 var _ = Describe("Get Event List with valid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -103,9 +103,9 @@ var _ = Describe("Get Event List with valid param", func() {
 var _ = Describe("Get Event by ID with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := []byte(`{"status":false}`)
+	calendar := []byte(`{"status":false}`)
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -130,9 +130,9 @@ var _ = Describe("Get Event by ID with invalid param", func() {
 var _ = Describe("Get Event by ID with invalid key", func() {
 
 	os.Setenv("KEY", "mockKey")
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -157,9 +157,9 @@ var _ = Describe("Get Event by ID with invalid key", func() {
 var _ = Describe("Get Event by ID with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{CalenderID: "mockCalenderID", EventID: "mockEventID"}
+	calendar := CalendarArguments{CalendarID: "mockCalendarID", EventID: "mockEventID"}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -184,9 +184,9 @@ var _ = Describe("Get Event by ID with invalid param", func() {
 var _ = Describe("Get Event by ID with valid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{CalenderID: calenderID, EventID: eventID}
+	calendar := CalendarArguments{CalendarID: calendarID, EventID: eventID}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -208,26 +208,26 @@ var _ = Describe("Get Event by ID with valid param", func() {
 	})
 })
 
-var _ = Describe("Get Calender By ID with invalid param", func() {
+var _ = Describe("Get Calendar By ID with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := []byte(`{"status":false}`)
+	calendar := []byte(`{"status":false}`)
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/getCalender", requestBody)
+	request, err := http.NewRequest("POST", "/getCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetCalenderByID)
+	handler := http.HandlerFunc(GetCalendarByID)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Get Calender", func() {
-		Context("Calender by id", func() {
+	Describe("Get Calendar", func() {
+		Context("Calendar by id", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -235,26 +235,26 @@ var _ = Describe("Get Calender By ID with invalid param", func() {
 	})
 })
 
-var _ = Describe("Get Calender By ID with invalid key", func() {
+var _ = Describe("Get Calendar By ID with invalid key", func() {
 
 	os.Setenv("KEY", "mockKey")
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/getCalender", requestBody)
+	request, err := http.NewRequest("POST", "/getCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetCalenderByID)
+	handler := http.HandlerFunc(GetCalendarByID)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Get Calender", func() {
-		Context("Calender by id", func() {
+	Describe("Get Calendar", func() {
+		Context("Calendar by id", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -262,26 +262,26 @@ var _ = Describe("Get Calender By ID with invalid key", func() {
 	})
 })
 
-var _ = Describe("Get Calender By ID with invalid param", func() {
+var _ = Describe("Get Calendar By ID with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{CalenderID: "mockCalenderID"}
+	calendar := CalendarArguments{CalendarID: "mockCalendarID"}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/getCalender", requestBody)
+	request, err := http.NewRequest("POST", "/getCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetCalenderByID)
+	handler := http.HandlerFunc(GetCalendarByID)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Get Calender", func() {
-		Context("Calender by id", func() {
+	Describe("Get Calendar", func() {
+		Context("Calendar by id", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -289,26 +289,26 @@ var _ = Describe("Get Calender By ID with invalid param", func() {
 	})
 })
 
-var _ = Describe("Get Calender by ID with valid param", func() {
+var _ = Describe("Get Calendar by ID with valid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{CalenderID: calenderID}
+	calendar := CalendarArguments{CalendarID: calendarID}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/getCalender", requestBody)
+	request, err := http.NewRequest("POST", "/getCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetCalenderByID)
+	handler := http.HandlerFunc(GetCalendarByID)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Get Calender", func() {
-		Context("Calender by id", func() {
+	Describe("Get Calendar", func() {
+		Context("Calendar by id", func() {
 			It("Should result http.StatusOK", func() {
 				Expect(recorder.Code).To(Equal(http.StatusOK))
 			})
@@ -316,26 +316,26 @@ var _ = Describe("Get Calender by ID with valid param", func() {
 	})
 })
 
-var _ = Describe("Create Calender with invalid param", func() {
+var _ = Describe("Create Calendar with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := []byte(`{"status":false}`)
+	calendar := []byte(`{"status":false}`)
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/createCalender", requestBody)
+	request, err := http.NewRequest("POST", "/createCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateCalender)
+	handler := http.HandlerFunc(CreateCalendar)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Create Calender", func() {
-		Context("create calender", func() {
+	Describe("Create Calendar", func() {
+		Context("create calendar", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -343,26 +343,26 @@ var _ = Describe("Create Calender with invalid param", func() {
 	})
 })
 
-var _ = Describe("Get Calender List with invalid key", func() {
+var _ = Describe("Get Calendar List with invalid key", func() {
 
 	os.Setenv("KEY", "mockKey")
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/createCalender", requestBody)
+	request, err := http.NewRequest("POST", "/createCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateCalender)
+	handler := http.HandlerFunc(CreateCalendar)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Create Calender", func() {
-		Context("create calender", func() {
+	Describe("Create Calendar", func() {
+		Context("create calendar", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -370,26 +370,26 @@ var _ = Describe("Get Calender List with invalid key", func() {
 	})
 })
 
-var _ = Describe("Create Calender with invalid param", func() {
+var _ = Describe("Create Calendar with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{EventID: "mockCalender"}
+	calendar := CalendarArguments{EventID: "mockCalendar"}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/createCalender", requestBody)
+	request, err := http.NewRequest("POST", "/createCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateCalender)
+	handler := http.HandlerFunc(CreateCalendar)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Create Calender", func() {
-		Context("create calender", func() {
+	Describe("Create Calendar", func() {
+		Context("create calendar", func() {
 			It("Should result http.StatusBadRequest", func() {
 				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
 			})
@@ -397,26 +397,26 @@ var _ = Describe("Create Calender with invalid param", func() {
 	})
 })
 
-var _ = Describe("Create Calender with valid param", func() {
+var _ = Describe("Create Calendar with valid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{Summary: "Test Calender", Description: "Test Description", Location: "Test Location"}
+	calendar := CalendarArguments{Summary: "Test Calendar", Description: "Test Description", Location: "Test Location"}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
 
-	request, err := http.NewRequest("POST", "/createCalender", requestBody)
+	request, err := http.NewRequest("POST", "/createCalendar", requestBody)
 	if err != nil {
 		log.Fatal(err)
 	}
 	recorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(CreateCalender)
+	handler := http.HandlerFunc(CreateCalendar)
 	handler.ServeHTTP(recorder, request)
 
-	Describe("Create Calender", func() {
-		Context("create calender", func() {
+	Describe("Create Calendar", func() {
+		Context("create calendar", func() {
 			It("Should result http.StatusOK", func() {
 				Expect(recorder.Code).To(Equal(http.StatusOK))
 			})
@@ -427,9 +427,9 @@ var _ = Describe("Create Calender with valid param", func() {
 var _ = Describe("Create Event with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := []byte(`{"status":false}`)
+	calendar := []byte(`{"status":false}`)
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -454,9 +454,9 @@ var _ = Describe("Create Event with invalid param", func() {
 var _ = Describe("Create Event with invalid key", func() {
 
 	os.Setenv("KEY", "mockKey")
-	calender := CalenderArguments{}
+	calendar := CalendarArguments{}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -481,9 +481,9 @@ var _ = Describe("Create Event with invalid key", func() {
 var _ = Describe("Create Event with invalid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{EventID: "mockCalender"}
+	calendar := CalendarArguments{EventID: "mockCalendar"}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}
@@ -508,9 +508,9 @@ var _ = Describe("Create Event with invalid param", func() {
 var _ = Describe("Create Event with valid param", func() {
 
 	os.Setenv("KEY", key)
-	calender := CalenderArguments{Summary: "Test Calender", Description: "Test Description", CalenderID: calenderID, StartDate: eventStartDate, EndDate: eventEndDate}
+	calendar := CalendarArguments{Summary: "Test Calendar", Description: "Test Description", CalendarID: calendarID, StartDate: eventStartDate, EndDate: eventEndDate}
 	requestBody := new(bytes.Buffer)
-	encodeErr := json.NewEncoder(requestBody).Encode(calender)
+	encodeErr := json.NewEncoder(requestBody).Encode(calendar)
 	if encodeErr != nil {
 		log.Fatal(encodeErr)
 	}

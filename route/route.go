@@ -2,7 +2,7 @@ package route
 
 import (
     "github.com/gorilla/mux"
-    calender "github.com/heaptracetechnology/google-calender/calender"
+    calendar "github.com/heaptracetechnology/google-calendar/calendar"
     "log"
     "net/http"
 )
@@ -20,34 +20,34 @@ type Routes []Route
 
 var routes = Routes{
     Route{
-        "CreateCalender",
+        "CreateCalendar",
         "POST",
-        "/createCalender",
-        calender.CreateCalender,
+        "/createCalendar",
+        calendar.CreateCalendar,
     },
     Route{
-        "GetCalenderByID",
+        "GetCalendarByID",
         "POST",
-        "/getCalender",
-        calender.GetCalenderByID,
+        "/getCalendar",
+        calendar.GetCalendarByID,
     },
     Route{
         "EventList",
         "POST",
         "/eventList",
-        calender.EventList,
+        calendar.EventList,
     },
     Route{
         "CreateEvent",
         "POST",
         "/createEvent",
-        calender.CreateEvent,
+        calendar.CreateEvent,
     },
     Route{
         "GetEventByID",
         "POST",
         "/getEvent",
-        calender.GetEventByID,
+        calendar.GetEventByID,
     },
 }
 

@@ -1,10 +1,10 @@
-package calender
+package calendar
 
 import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	result "github.com/heaptracetechnology/google-calender/result"
+	result "github.com/heaptracetechnology/google-calendar/result"
 	"golang.org/x/oauth2/google"
 	calendar "google.golang.org/api/calendar/v3"
 	"net/http"
@@ -12,8 +12,8 @@ import (
 	"time"
 )
 
-//CalenderArguments struct
-type CalenderArguments struct {
+//CalendarArguments struct
+type CalendarArguments struct {
 	Summary       string   `json:"summary,omitempty"`
 	Description   string   `json:"description,omitempty"`
 	Location      string   `json:"location,omitempty"`
@@ -21,13 +21,13 @@ type CalenderArguments struct {
 	AttendeesList []string `json:"attendeesList,omitempty"`
 	StartDate     string   `json:"startDate,omitempty"`
 	EndDate       string   `json:"endDate,omitempty"`
-	CalenderID    string   `json:"calenderId,omitempty"`
+	CalendarID    string   `json:"calendarId,omitempty"`
 }
 
 const layout = "2006-01-02T15:04:05.000Z"
 
-//CreateCalender Google-Calender
-func CreateCalender(responseWriter http.ResponseWriter, request *http.Request) {
+//CreateCalendar Google-Calendar
+func CreateCalendar(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var key = os.Getenv("KEY")
 
@@ -38,7 +38,7 @@ func CreateCalender(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	decoder := json.NewDecoder(request.Body)
-	var param CalenderArguments
+	var param CalendarArguments
 	decodeErr := decoder.Decode(&param)
 	if decodeErr != nil {
 		result.WriteErrorResponseString(responseWriter, decodeErr.Error())
@@ -58,15 +58,15 @@ func CreateCalender(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	calenderProperties := calendar.Calendar{
+	calendarProperties := calendar.Calendar{
 		Summary:     param.Summary,
 		Description: param.Description,
 		Location:    param.Location,
 	}
 
-	newCalender := service.Calendars.Insert(&calenderProperties)
+	newCalendar := service.Calendars.Insert(&calendarProperties)
 
-	newCal, newCalErr := newCalender.Do()
+	newCal, newCalErr := newCalendar.Do()
 	if newCalErr != nil {
 		result.WriteErrorResponseString(responseWriter, newCalErr.Error())
 		return
@@ -76,8 +76,8 @@ func CreateCalender(responseWriter http.ResponseWriter, request *http.Request) {
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 }
 
-//GetCalenderByID Google-Calender
-func GetCalenderByID(responseWriter http.ResponseWriter, request *http.Request) {
+//GetCalendarByID Google-Calendar
+func GetCalendarByID(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var key = os.Getenv("KEY")
 
@@ -88,7 +88,7 @@ func GetCalenderByID(responseWriter http.ResponseWriter, request *http.Request) 
 	}
 
 	decoder := json.NewDecoder(request.Body)
-	var param CalenderArguments
+	var param CalendarArguments
 	decodeErr := decoder.Decode(&param)
 	if decodeErr != nil {
 		result.WriteErrorResponseString(responseWriter, decodeErr.Error())
@@ -108,17 +108,17 @@ func GetCalenderByID(responseWriter http.ResponseWriter, request *http.Request) 
 		return
 	}
 
-	calender, calenderErr := service.CalendarList.Get(param.CalenderID).Do()
-	if calenderErr != nil {
-		result.WriteErrorResponseString(responseWriter, calenderErr.Error())
+	calendar, calendarErr := service.CalendarList.Get(param.CalendarID).Do()
+	if calendarErr != nil {
+		result.WriteErrorResponseString(responseWriter, calendarErr.Error())
 		return
 	}
 
-	bytes, _ := json.Marshal(calender)
+	bytes, _ := json.Marshal(calendar)
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 }
 
-//EventList Google-Calender
+//EventList Google-Calendar
 func EventList(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var key = os.Getenv("KEY")
@@ -130,7 +130,7 @@ func EventList(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	decoder := json.NewDecoder(request.Body)
-	var param CalenderArguments
+	var param CalendarArguments
 	decodeErr := decoder.Decode(&param)
 	if decodeErr != nil {
 		result.WriteErrorResponseString(responseWriter, decodeErr.Error())
@@ -160,7 +160,7 @@ func EventList(responseWriter http.ResponseWriter, request *http.Request) {
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 }
 
-//CreateEvent Google-Calender
+//CreateEvent Google-Calendar
 func CreateEvent(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var key = os.Getenv("KEY")
@@ -172,7 +172,7 @@ func CreateEvent(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	decoder := json.NewDecoder(request.Body)
-	var param CalenderArguments
+	var param CalendarArguments
 	decodeErr := decoder.Decode(&param)
 	if decodeErr != nil {
 		result.WriteErrorResponseString(responseWriter, decodeErr.Error())
@@ -224,7 +224,7 @@ func CreateEvent(responseWriter http.ResponseWriter, request *http.Request) {
 			DateTime: endDate.Format(time.RFC3339)},
 	}
 
-	createdEvent, eventErr := service.Events.Insert(param.CalenderID, &eventDetails).Do()
+	createdEvent, eventErr := service.Events.Insert(param.CalendarID, &eventDetails).Do()
 	if eventErr != nil {
 		result.WriteErrorResponseString(responseWriter, eventErr.Error())
 		return
@@ -234,7 +234,7 @@ func CreateEvent(responseWriter http.ResponseWriter, request *http.Request) {
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 }
 
-//GetEventByID Google-Calender
+//GetEventByID Google-Calendar
 func GetEventByID(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var key = os.Getenv("KEY")
@@ -246,7 +246,7 @@ func GetEventByID(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	decoder := json.NewDecoder(request.Body)
-	var param CalenderArguments
+	var param CalendarArguments
 	decodeErr := decoder.Decode(&param)
 	if decodeErr != nil {
 		result.WriteErrorResponseString(responseWriter, decodeErr.Error())
@@ -266,7 +266,7 @@ func GetEventByID(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	event, eventErr := service.Events.Get(param.CalenderID, param.EventID).Do()
+	event, eventErr := service.Events.Get(param.CalendarID, param.EventID).Do()
 	if eventErr != nil {
 		result.WriteErrorResponseString(responseWriter, eventErr.Error())
 		return

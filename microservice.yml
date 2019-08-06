@@ -1,11 +1,11 @@
 omg: 1
 lifecycle:
   startup:
-    command: ["google-calender"]
+    command: ["google-calendar"]
 info:
   version: 1.0.0
-  title: Google Calender
-  description: This is a google-calender service.
+  title: Google Calendar
+  description: This is a google-calendar service.
   contact:
     name: Rohit Shetty
     url: https://github.com/ht68rohit
@@ -14,24 +14,24 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 actions:
-  createCalender:
-    help: Create new calender.
+  createCalendar:
+    help: Create new calendar.
     http:
       port: 3000
       method: post
-      path: /createCalender
+      path: /createCalendar
       contentType: application/json
     arguments:
       summary:
         type: string
         in: requestBody
         required: true
-        help: The summary for new calender.
+        help: The summary for new calendar.
       description:
         type: string
         in: requestBody
         required: true
-        help: The description for new calender.
+        help: The description for new calendar.
       location:
         type: string
         in: requestBody
@@ -64,19 +64,19 @@ actions:
         timeZone:
           help: The time zone of the calendar.
           type: string
-  getCalender:
-    help: Get calender by ID.
+  getCalendar:
+    help: Get calendar by ID.
     http:
       port: 3000
       method: post
-      path: /getCalender
+      path: /getCalendar
       contentType: application/json
     arguments:
-      calenderId:
+      calendarId:
         type: string
         in: requestBody
         required: true
-        help: The calender Id to get details.
+        help: The calendar Id to get details.
     output:
       type: object
       contentType: application/json
@@ -92,7 +92,7 @@ actions:
           type: string
         conferenceProperties: 
           help: Conferencing properties for this calendar.
-          type: list
+          type: object
         description:
           help: Description of the calendar. 
           type: string
@@ -117,29 +117,6 @@ actions:
         timeZone:
           help: The time zone of the calendar.
           type: string
-  eventList:
-    help: Get event list.
-    http:
-      port: 3000
-      method: post
-      path: /eventList
-      contentType: application/json
-    output:
-      type: object
-      contentType: application/json
-      properties:
-        etag:
-          help: ETag of the resource.	
-          type: string
-        items:
-          help: The list of events.
-          type: list
-        kind:
-          help: Type of the resource 
-          type: string
-        nextPageToken:
-          help: The next page token.
-          type: string
   createEvent:
     help: Create new event.
     http:
@@ -148,11 +125,11 @@ actions:
       path: /createEvent
       contentType: application/json
     arguments:
-      calenderId:
+      calendarId:
         type: string
         in: requestBody
         required: true
-        help: The calender Id.
+        help: The calendar Id.
       summary:
         type: string
         in: requestBody
@@ -237,6 +214,29 @@ actions:
         updated:
           help: The updated date and time of event.
           type: string
+  eventList:
+    help: Get event list.
+    http:
+      port: 3000
+      method: post
+      path: /eventList
+      contentType: application/json
+    output:
+      type: object
+      contentType: application/json
+      properties:
+        etag:
+          help: ETag of the resource.	
+          type: string
+        items:
+          help: The list of events.
+          type: list
+        kind:
+          help: Type of the resource 
+          type: string
+        nextPageToken:
+          help: The next page token.
+          type: string
   getEvent:
     help: Get event by ID.
     http:
@@ -245,11 +245,11 @@ actions:
       path: /getEvent
       contentType: application/json
     arguments:
-      calenderId:
+      calendarId:
         type: string
         in: requestBody
         required: true
-        help: The calender Id.
+        help: The calendar Id.
       eventId:
         type: string
         in: requestBody
