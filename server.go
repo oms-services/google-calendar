@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/heaptracetechnology/google-calender/route"
+	"github.com/heaptracetechnology/google-calendar/route"
 	"log"
 	"net/http"
 )
