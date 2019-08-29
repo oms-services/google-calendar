@@ -1,6 +1,8 @@
 # _Google Calender_ OMG Microservice
 
 [![Open Microservice Guide](https://img.shields.io/badge/OMG%20Enabled-👍-green.svg?)](https://microservice.guide)
+[![Build Status](https://travis-ci.com/omg-services/google-calendar.svg?branch=master)](https://travis-ci.com/omg-services/google-calendar)
+[![codecov](https://codecov.io/gh/omg-services/google-calendar/branch/master/graph/badge.svg)](https://codecov.io/gh/omg-services/google-calendar)
 
 
 An OMG service for google calender, it allows users to create and edit events. Reminders can be enabled for events, with options available for type and time. Event locations can also be added, and other users can be invited to events.
