@@ -2,7 +2,7 @@ package route
 
 import (
     "github.com/gorilla/mux"
-    calendar "github.com/heaptracetechnology/google-calendar/calendar"
+    calendar "github.com/oms-services/google-calendar/calendar"
     "log"
     "net/http"
 )

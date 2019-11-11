@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	result "github.com/heaptracetechnology/google-calendar/result"
+	result "github.com/oms-services/google-calendar/result"
 	"golang.org/x/oauth2/google"
 	calendar "google.golang.org/api/calendar/v3"
 	"net/http"
