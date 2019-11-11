@@ -1,4 +1,4 @@
-omg: 1
+oms: 1
 lifecycle:
   startup:
     command: ["google-calendar"]
@@ -37,7 +37,7 @@ actions:
         in: requestBody
         help: The geographic location of the calendar.
     output:
-      type: object
+      type: map
       contentType: application/json
   getCalendar:
     help: Get calendar by ID.
@@ -53,7 +53,7 @@ actions:
         required: true
         help: The calendar Id to get details.
     output:
-      type: object
+      type: map
       contentType: application/json
   createEvent:
     help: Create new event.
@@ -98,7 +98,7 @@ actions:
         required: true
         help: The end date and time for event, provide datetime with "2006-01-02T15:04:05.000Z" format.
     output:
-      type: object
+      type: map
       contentType: application/json
   eventList:
     help: Get event list.
@@ -108,7 +108,7 @@ actions:
       path: /eventList
       contentType: application/json
     output:
-      type: object
+      type: map
       contentType: application/json
   getEvent:
     help: Get event by ID.
@@ -129,7 +129,7 @@ actions:
         required: true
         help: The event Id to get details.
     output:
-      type: object
+      type: map
       contentType: application/json
 environment:
   KEY:
