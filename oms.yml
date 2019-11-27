@@ -1,18 +1,19 @@
 oms: 1
-lifecycle:
-  startup:
-    command: ["google-calendar"]
 info:
   version: 1.0.0
   title: Google Calendar
   description: This is a google-calendar service.
   contact:
-    name: Rohit Shetty
-    url: https://github.com/ht68rohit
-    email: rohits@heaptrace.com
+    name: Open Microservices
+    url: 'https://openmicroservices.org'
+    email: core@openmicroservices.org
   license:
     name: MIT
-    url: https://opensource.org/licenses/MIT
+    url: 'https://opensource.org/licenses/MIT'
+lifecycle:
+  startup:
+    command:
+      - google-calendar
 actions:
   createCalendar:
     help: Create new calendar.
@@ -91,12 +92,16 @@ actions:
         type: string
         in: requestBody
         required: true
-        help: The start date and time for event, provide datetime with "2006-01-02T15:04:05.000Z" format.
+        help: >-
+          The start date and time for event, provide datetime with
+          "2006-01-02T15:04:05.000Z" format.
       endDate:
         type: string
         in: requestBody
         required: true
-        help: The end date and time for event, provide datetime with "2006-01-02T15:04:05.000Z" format.
+        help: >-
+          The end date and time for event, provide datetime with
+          "2006-01-02T15:04:05.000Z" format.
     output:
       type: map
       contentType: application/json
